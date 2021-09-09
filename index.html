@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Testing border growth upon .focus</title>
+
+<style>
+
+	*, body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-weight: 400;
+        color: white;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+    body {
+        font-size: 16px;
+        background-color: black;
+    }
+	
+    .tabSystem {
+        margin: 3rem 3rem 0 3rem;
+    }
+    .tabContainer {
+        display: flex;
+    }
+
+    .tab {
+        font-size: 1rem;
+        padding: 1rem;
+        color: grey;
+        transition: color 0.2s;
+    }
+
+    .tab:hover {
+        color: white;
+    }
+
+    .tab.active {
+        color: white;
+    }
+
+    .tabUnderline {
+        background-color: salmon;
+        height: 2px;
+        transition: 0.5s;
+
+    }
+
+</style>
+</head>
+<body>
+    <div class="tabSystem">
+        <div class="tabContainer">
+            <div class="tab active" onclick="selectTab(this)">Finale Ligure</div>
+            <div class="tab" onclick="selectTab(this)">Jamnica</div>
+            <div class="tab" onclick="selectTab(this)">Alpujarras</div>
+            <div class="tab"onclick="selectTab(this)">Levi</div>
+            <div class="tab"onclick="selectTab(this)">Åre</div>
+        </div>
+        <div class="tabUnderline"></div>
+    </div>
+</body>
+<script>
+
+
+function getAllTabs() {
+    return document.getElementsByClassName("tab");
+}
+
+function countWidthOfPreviousTabs() {
+    let widthOfPreviousTabs = 0;
+    for (let i of getAllTabs()) {
+        if (i.className == "tab active") { return widthOfPreviousTabs }
+        widthOfPreviousTabs += i.offsetWidth;
+    }
+    return widthOfPreviousTabs;
+}
+
+function positionUnderline() {
+    let activeTab = document.getElementsByClassName("tab active");
+    let underline = document.getElementsByClassName("tabUnderline");
+    underline[0].style.width = activeTab[0].offsetWidth + "px";
+    underline[0].style.marginLeft = countWidthOfPreviousTabs() + "px";
+}
+
+positionUnderline();
+
+function selectTab(thisElement) {
+    for (let j of getAllTabs()) {
+        j.className = j.className.replace(" active", "");
+    }
+    thisElement.className += " active";
+    positionUnderline();
+}
+
+
+
+</script>
+</html>
