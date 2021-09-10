@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<title>Tabs with animated underline</title>
-    <meta name="author" content="Jyri Konttinen">
+
 <style>
 
 	* {
@@ -75,16 +75,18 @@
         </div>
         <div class="tabUnderline"></div>
     </div>
+    <!--
     <div class="tabSystem3">
         <div class="tabContainer" onmouseout="returnUnderlineUnderActiveTab(this)">
-            <div class="tab" onmouseover="extendUnderline(this)" onclick="selectTab(this)">Tukholma</div>
-            <div class="tab active" onmouseover="extendUnderline(this)" onclick="selectTab(this)">Berliini</div>
+            <div class="tab active" onmouseover="extendUnderline(this)" onclick="selectTab(this)">Tukholma</div>
+            <div class="tab" onmouseover="extendUnderline(this)" onclick="selectTab(this)">Berliini</div>
             <div class="tab" onmouseover="extendUnderline(this)" onclick="selectTab(this)">Espoo</div>
             <div class="tab" onmouseover="extendUnderline(this)" onclick="selectTab(this)">Bodom</div>
             <div class="tab" onmouseover="extendUnderline(this)" onclick="selectTab(this)">Salo</div>
         </div>
         <div class="tabUnderline"></div>
-    </div>  
+    </div>
+    -->    
 </body>
 <script>
 
@@ -126,29 +128,24 @@ function returnUnderlineUnderActiveTab(tabContainer) {
     positionUnderline(activeTab[0]);
 }
 
-function extendUnderline(tab) {
+/* function extendUnderline(tab) {
     let allTabs = getAllTabs(tab);
     for (let i = 0; i < allTabs.length; i++) {
-        if (tab == allTabs[i]) {
-            var hoveredTabNumber = i.valueOf();
+        if (let == allTabs[k]) {
+            var hoveredTabNumber = k.valueOf();
         }
-        if (allTabs[i].className == "tab active") {
-            var activeTabNumber = i.valueOf();
+        if (allTabs[k].className = "tab active") {
+            var activeTabNumber = k.valueOf();
         }
     }
     let widthOfUnderline = 0;
-    if (hoveredTabNumber < activeTabNumber) {
-        for (let i = hoveredTabNumber; i <= activeTabNumber; i++) {
-            widthOfUnderline += allTabs[i].offsetWidth;
-        }
-        getUnderline(tab).style.marginLeft = countWidthOfPreviousTabs(tab) + "px";
-    } else {
-        for (let i = activeTabNumber; i <= hoveredTabNumber; i++) {
-            widthOfUnderline += allTabs[i].offsetWidth;
-        }
+    for (let i = 0; i < ( activeTab - hoveredTab ); i++) {
+        widthOfUnderline += allTabs[i].offsetWidth;
     }
-    getUnderline(tab).style.width = widthOfUnderline + "px";
-}
+    let tabSystem = tab.parentNode.parentNode;
+    let underline = tabSystem.getElementsByClassName("tabUnderline");
+    underline[0].style.width = widthOfUnderline + "px";
+} */
 
 let allActiveTabs = document.getElementsByClassName("tab active");
 for (let k of allActiveTabs) {
