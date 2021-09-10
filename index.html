@@ -99,12 +99,12 @@ function positionUnderline(tab) {
     underline[0].style.marginLeft = countWidthOfPreviousTabs(tab) + "px";
 }
 
-function selectTab(thisTab) {
-    for (let j of getAllTabs(thisTab)) {
+function selectTab(tab) {
+    for (let j of getAllTabs(tab)) {
         j.className = j.className.replace(" active", "");
     }
-    thisTab.className += " active";
-    positionUnderline(thisTab);
+    tab.className += " active";
+    positionUnderline(tab);
 }
 
 function returnUnderlineUnderActiveTab(tabContainer) {
