@@ -19,9 +19,22 @@
         background-color: black;
     }
 	
-    .tabSystem1, .tabSystem2, .tabSystem3 {
+    .tabSystem1, .tabSystem2, .tabSystem3, .tabSystem4 {
         margin: 3rem 3rem 0 3rem;
     }
+
+    .tabSystem4 {
+        overflow: hidden;
+        z-index: 0;
+        background-image: linear-gradient(to right, rgba(0,0,0,1), rgba(255,0,0,0), rgba(255,0,0,0), rgba(255,0,0,0), rgba(255,0,0,0), rgba(255,0,0,0), rgba(0,0,0,1));
+        display: flex;
+        cursor: pointer;
+    }
+
+    .tabSystem4, .mobileUnderlineContainer {
+        width: 400px;
+    }
+
     .tabContainer {
         display: flex;
     }
@@ -33,7 +46,7 @@
         transition: color 0.2s;
     }
 
-    .tabSystem1 .tab:hover {
+    .tabSystem1 .tab:hover, .tab.active, .mobileActive {
         color: white;
     }
 
@@ -41,15 +54,29 @@
         cursor: pointer;
     }
 
-    .tab.active {
-        color: white;
+    .tabSystem4 .tab {
+        z-index: -1;
+        user-select: none;
     }
 
-    .tabUnderline {
+    .mobileActive {
+        transition: color 1s;
+    }
+
+    .tabUnderline, .mobileUnderline {
         background-color: salmon;
         height: 2px;
         transition: 0.5s;
+    }
 
+    .mobileUnderlineContainer {
+        display: flex;
+        justify-content: center;
+        margin: 0 3rem 0 3rem;
+    }
+
+    nobr {
+        color: inherit;
     }
 
 </style>
@@ -84,10 +111,20 @@
             <div class="tab" onmouseover="extendUnderline(this)" onclick="selectTab(this)">Salo</div>
         </div>
         <div class="tabUnderline"></div>
-    </div>  
+    </div>
+    <div class="tabSystem4">
+        <div class="tabContainer">
+            <div class="tab mobileActive"><nobr>Meri-Rastila</nobr></div>
+            <div class="tab">Ramsinniemi</div>
+            <div class="tab">Kuusijärvi</div>
+            <div class="tab">Furuvik</div>
+            <div class="tab">Bromarv</div>
+        </div>
+    </div>
+    <div class="mobileUnderlineContainer"><div class="mobileUnderline"></div></div>
+    <div id="positionChecker"></div>
 </body>
 <script>
-
 
 function getAllTabs(tab) {
     let tabContainer = tab.parentNode;
@@ -155,6 +192,110 @@ for (let k of allActiveTabs) {
     positionUnderline(k);
 }
 
+// Mobile version
+
+// Make container draggable
+const slider = document.querySelector(".tabSystem4");
+let isDown = false;
+let startX;
+let scrollLeft;
+let scrollCorrectedX;
+
+function correctXForTabWidth(sliderX) {
+    scrollCorrectedX = steps[findTabNumberToSnap(sliderX)] - (firstMobileTab.offsetWidth / 2) + (allMobileTabs[findTabNumberToSnap(sliderX)].offsetWidth / 2);
+    return scrollCorrectedX;
+}
+
+slider.addEventListener("mousedown", function(thisEvent) {
+    isDown = true;
+    startX = thisEvent.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+});
+slider.addEventListener("mouseleave", function(thisEvent) {
+    isDown = false;
+    animateScroll(correctXForTabWidth(slider.scrollLeft));
+});
+slider.addEventListener("mouseup", function() {
+    isDown = false;
+    animateScroll(correctXForTabWidth(slider.scrollLeft));
+});
+slider.addEventListener("mousemove", function(thisEvent) {
+    // Move slider
+    if(isDown == false) return;
+    thisEvent.preventDefault();
+    const x = thisEvent.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 3; // Scroll 3x faster
+    slider.scrollLeft = scrollLeft - walk;
+    // Highlight tab upon scroll
+    selectMobileTab(allMobileTabs[findTabNumberToSnap(slider.scrollLeft)]);
+});
+
+//Align first and last tab in the center of the container
+let mobileTabSystem = document.getElementsByClassName("tabSystem4");
+let allMobileTabs = mobileTabSystem[0].getElementsByClassName("tab");
+let firstMobileTab = allMobileTabs[0];
+let lastMobileTab = allMobileTabs[allMobileTabs.length - 1];
+let centerOfView = mobileTabSystem[0].offsetWidth / 2;
+firstMobileTab.style.marginLeft = centerOfView - (firstMobileTab.offsetWidth / 2) + "px";
+lastMobileTab.style.marginRight = centerOfView - (lastMobileTab.offsetWidth / 2) + "px";
+
+// Create an array with steps based on tabs' widths
+let steps = [0];
+let stepCounter = 0;
+for (let i = 0; i < allMobileTabs.length; i++) {
+    stepCounter += allMobileTabs[i].offsetWidth;
+    steps.push(stepCounter);
+}
+
+// Assign mobile selector's width based on active tab's width
+function setMobileUnderlineWidth() {
+    let mobileSelection = document.getElementsByClassName("mobileUnderline");
+    let activeTab = mobileTabSystem[0].getElementsByClassName("tab mobileActive");
+    mobileSelection[0].style.width = activeTab[0].offsetWidth + "px";
+}
+setMobileUnderlineWidth()
+
+// Snap scroll to center of tab
+let tabNumberToSnap;
+function findTabNumberToSnap(offset) {
+    let centerX = offset + (firstMobileTab.offsetWidth / 2);
+    for (let i = 0; i < steps.length; i++) {
+        if (centerX >= steps[i]  && centerX < steps[i + 1]) {
+            tabNumberToSnap = i;
+        }
+    }
+    return tabNumberToSnap;
+}
+
+// Highlight selected tab
+function selectMobileTab(tab) {
+    for (let i of getAllTabs(tab)) {
+        i.className = i.className.replace(" mobileActive", "");
+    }
+    tab.className += " mobileActive";
+    setMobileUnderlineWidth()
+}
+
+// Animation for snap with a transition
+let id = null;
+function animateScroll(pointToSnap) {
+    pointToSnap = Math.round(pointToSnap);
+    clearInterval(id);
+    id = setInterval(frame, 10);
+    let position = mobileTabSystem[0].scrollLeft;
+    function frame() {
+        if (position == pointToSnap) {
+            clearInterval(id);
+        } else {
+        if (pointToSnap > mobileTabSystem[0].scrollLeft) { 
+            position++; 
+        } else { 
+            position--; 
+        };
+        mobileTabSystem[0].scrollLeft = position;
+    }
+  }
+}
 
 </script>
 </html>
