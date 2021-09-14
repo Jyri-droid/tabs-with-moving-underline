@@ -1,0 +1,73 @@
+* {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    color: white;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 16px;
+    background-color: black;
+}
+
+.tabSystem1, .tabSystem2, .tabSystem3, .tabSystem4 {
+    margin: 3rem 3rem 0 3rem;
+}
+
+.tabSystem4 {
+    overflow: hidden;
+    z-index: 0;
+    background-image: linear-gradient(to right, rgba(0,0,0,1), rgba(255,0,0,0), rgba(255,0,0,0), rgba(255,0,0,0), rgba(255,0,0,0), rgba(255,0,0,0), rgba(0,0,0,1));
+    display: flex;
+    cursor: pointer;
+}
+
+.tabSystem4, .mobileUnderlineContainer {
+    width: 400px;
+}
+
+.tabContainer {
+    display: flex;
+}
+
+.tab {
+    font-size: 1rem;
+    padding: 1rem;
+    color: grey;
+    transition: color 0.2s;
+}
+
+.tabSystem1 .tab:hover, .tab.active, .mobileActive {
+    color: white;
+}
+
+.tab:hover {
+    cursor: pointer;
+}
+
+.tabSystem4 .tab {
+    z-index: -1;
+    user-select: none;
+}
+
+.mobileActive {
+    transition: color 1s;
+}
+
+.tabUnderline, .mobileUnderline {
+    background-color: salmon;
+    height: 2px;
+    transition: 0.5s;
+}
+
+.mobileUnderlineContainer {
+    display: flex;
+    justify-content: center;
+    margin: 0 3rem 0 3rem;
+}
+
+nobr {
+    color: inherit;
+}
