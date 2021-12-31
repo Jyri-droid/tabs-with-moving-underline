@@ -86,11 +86,11 @@ slider.addEventListener("mousedown", function(thisEvent) {
 });
 slider.addEventListener("mouseleave", function(thisEvent) {
     isDown = false;
-    animateScroll(correctXForTabWidth(slider.scrollLeft));
+    animateSnap(correctXForTabWidth(slider.scrollLeft));
 });
 slider.addEventListener("mouseup", function() {
     isDown = false;
-    animateScroll(correctXForTabWidth(slider.scrollLeft));
+    animateSnap(correctXForTabWidth(slider.scrollLeft));
 });
 slider.addEventListener("mousemove", function(thisEvent) {
     // Move slider
@@ -110,11 +110,11 @@ slider.addEventListener("touchstart", function(thisEvent) {
 });
 /* slider.addEventListener("touchcancel", function(thisEvent) {
     isDown = false;
-    animateScroll(correctXForTabWidth(slider.scrollLeft));
+    animateSnap(correctXForTabWidth(slider.scrollLeft));
 }); */
 slider.addEventListener("touchend", function() {
     isDown = false;
-    animateScroll(correctXForTabWidth(slider.scrollLeft));
+    animateSnap(correctXForTabWidth(slider.scrollLeft));
 });
 slider.addEventListener("touchmove", function(thisEvent) {
     // Move slider
@@ -174,7 +174,7 @@ function selectMobileTab(tab) {
 }
 // Animation for snap with a transition
 let id = null;
-function animateScroll(pointToSnap) {
+function animateSnap(pointToSnap) {
     pointToSnap = Math.round(pointToSnap);
     clearInterval(id);
     id = setInterval(frame, 10);
