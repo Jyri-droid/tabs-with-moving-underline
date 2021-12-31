@@ -12,7 +12,7 @@ body {
     background-color: black;
 }
 
-.tabSystem1, .tabSystem2, .tabSystem3, .tabSystem4 {
+.tabSystem1, .tabSystem2, .tabSystem3 {
     margin: 3rem 3rem 0 3rem;
 }
 
@@ -21,6 +21,7 @@ body {
     z-index: 0;
     background-image: linear-gradient(to right, black, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0),  black);
     cursor: pointer;
+    margin-top: 2rem;
 }
 
 .tabSystem4, .mobileUnderlineContainer {
@@ -69,7 +70,6 @@ body {
 .mobileUnderlineContainer {
     display: none;
     justify-content: center;
-    margin: 0 3rem 0 3rem;
 }
 
 nobr {
