@@ -78,6 +78,7 @@ function correctXForTabWidth(sliderX) {
     return scrollCorrectedX;
 }
 
+/*
 slider.addEventListener("mousedown", function(thisEvent) {
     isDown = true;
     startX = thisEvent.pageX - slider.offsetLeft;
@@ -92,6 +93,30 @@ slider.addEventListener("mouseup", function() {
     animateScroll(correctXForTabWidth(slider.scrollLeft));
 });
 slider.addEventListener("mousemove", function(thisEvent) {
+    // Move slider
+    if(isDown == false) return;
+    thisEvent.preventDefault();
+    const x = thisEvent.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 3; // Scroll 3x faster
+    slider.scrollLeft = scrollLeft - walk;
+    // Highlight tab upon scroll
+    selectMobileTab(allMobileTabs[findTabNumberToSnap(slider.scrollLeft)]);
+}); */
+
+slider.addEventListener("touchstart", function(thisEvent) {
+    isDown = true;
+    startX = thisEvent.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+});
+slider.addEventListener("touchcancel", function(thisEvent) {
+    isDown = false;
+    animateScroll(correctXForTabWidth(slider.scrollLeft));
+});
+slider.addEventListener("touchend", function() {
+    isDown = false;
+    animateScroll(correctXForTabWidth(slider.scrollLeft));
+});
+slider.addEventListener("touchmove", function(thisEvent) {
     // Move slider
     if(isDown == false) return;
     thisEvent.preventDefault();
