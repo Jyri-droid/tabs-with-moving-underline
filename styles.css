@@ -68,7 +68,7 @@ body {
 }
 
 .mobileUnderlineContainer {
-    display: flex;
+    display: none;
     justify-content: center;
     margin: 0 3rem 0 3rem;
 }
@@ -87,7 +87,5 @@ nobr {
     .mobileUnderlineContainer {
         display: flex;
     }
-    #positionChecker {
-        display: block;
-    }
+
 }
