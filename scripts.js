@@ -108,14 +108,14 @@ slider.addEventListener("touchstart", function(thisEvent) {
     startX = thisEvent.pageX - slider.offsetLeft;
     scrollLeft = slider.scrollLeft;
 });
-slider.addEventListener("touchcancel", function(thisEvent) {
+/* slider.addEventListener("touchcancel", function(thisEvent) {
     isDown = false;
     animateScroll(correctXForTabWidth(slider.scrollLeft));
 });
 slider.addEventListener("touchend", function() {
     isDown = false;
     animateScroll(correctXForTabWidth(slider.scrollLeft));
-});
+}); */
 slider.addEventListener("touchmove", function(thisEvent) {
     // Move slider
     if(isDown == false) return;
