@@ -172,7 +172,7 @@ function selectMobileTab(tab) {
     tab.className += " mobileActive";
     setMobileUnderlineWidth()
 }
-
+alert("I work");
 // Animation for snap with a transition
 let id = null;
 function animateScroll(pointToSnap) {
