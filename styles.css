@@ -20,12 +20,11 @@ body {
     overflow: hidden;
     z-index: 0;
     background-image: linear-gradient(to right, black, rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0), rgba(0,0,0,0),  black);
-
     cursor: pointer;
 }
 
 .tabSystem4, .mobileUnderlineContainer {
-    width: 400px;
+    width: 100%;
     display: none;
 }
 
